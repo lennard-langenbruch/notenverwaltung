@@ -6,33 +6,25 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.fh.swf.notenverwaltung.entity.Student;
-import de.fh.swf.notenverwaltung.repository.StudentRepository;
+import de.fh.swf.notenverwaltung.service.StudentService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 public class StudentController {
-	
+
 	@Autowired
-	StudentRepository studentRepository;
-	
+	StudentService studentService;
+
 	@GetMapping("/notendurchschnitt")
 	@ResponseBody
 	public String berechnen() {
-		
-		Student s = studentRepository.findOneByNachname("langenbruch");
-		s.berechnen();		
-		return s.getNotendurchschnitt();
-	};
-	
+		return studentService.getNotendurchschnitt();
+	}
+
 	@GetMapping("/creditpoints")
 	@ResponseBody
 	public String totalCreditpoints() {
-		
-		Student s = studentRepository.findOneByNachname("langenbruch");
-		s.berechnen();
-	
-		return String.valueOf(s.getSummeCreditpoints());
+		return studentService.getSummeCreditpoints();
 	}
-	
+
 }
